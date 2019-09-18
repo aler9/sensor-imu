@@ -19,4 +19,5 @@ typedef void imu_invensense;
 
 error* imu_invensense_init(imu_invensense** pobj, int i2c_fd, uint8_t address,
     invensense_acc_range acc_range, invensense_gyro_range gyro_range);
+void imu_invensense_destroy(imu_invensense* obj);
 error* imu_invensense_read(void* obj, imu_output* r);

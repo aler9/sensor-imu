@@ -31,7 +31,7 @@ int main() {
     }
 
     imu_output io;
-    error* err = imu_auto_read(imu, &io);
+    err = imu_auto_read(imu, &io);
     if(err != NULL) {
         return -1;
     }
@@ -40,5 +40,4 @@ int main() {
     printf("acc x,y,z: %f, %f, %f\n", io.acc.x, io.acc.y, io.acc.z);
     return 0;
 }
-
 ```

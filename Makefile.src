@@ -1,0 +1,18 @@
+
+BIN = test-imu
+
+OBJECTS = $(patsubst %.c,%.o,$(wildcard *.c))
+
+CFLAGS += -Wall \
+	-Werror \
+	-O3
+
+LDFLAGS +=
+
+all: $(BIN)
+
+$(BIN): $(OBJECTS)
+	gcc $(OBJECTS) $(LDFLAGS) -o $@
+
+%.o: %.c
+	gcc $(CFLAGS) -c $< -o $@

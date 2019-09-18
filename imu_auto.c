@@ -67,6 +67,10 @@ error* imu_auto_init(imu_autot** pobj, int i2c_fd) {
     return NULL;
 }
 
+void imu_auto_destroy(imu_autot* obj) {
+    free(obj);
+}
+
 error* imu_auto_read(imu_autot* obj, imu_output* out) {
     _objt* _obj = (_objt*)obj;
     return _obj->sensor_read(_obj->sensor, out);

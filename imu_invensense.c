@@ -115,6 +115,10 @@ error* imu_invensense_init(imu_invensense** pobj, int i2c_fd, uint8_t address,
     return NULL;
 }
 
+void imu_invensense_destroy(imu_invensense* obj) {
+    free(obj);
+}
+
 static inline int16_t make_int16(uint8_t* data) {
     return data[0] << 8 | data[1];
 }
