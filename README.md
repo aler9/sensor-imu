@@ -2,6 +2,8 @@
 
 C library for interacting with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062).
 
+IMU model and address are autodetected during initialization.
+
 Works with the Raspberry Pi and probably with most of single-board computers equipped with I2C.
 
 ## Usage
