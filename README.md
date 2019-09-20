@@ -3,9 +3,10 @@
 C library for interacting with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062).
 
 Features:
-* Works with the Raspberry Pi and probably with almost every single-board computer equipped with I2C
+* works with the Raspberry Pi and probably with almost every single-board computer equipped with I2C
 * IMU model and address are autodetected during initialization
 * sampling rate up to 1khz (with 400khz I2C enabled)
+* orientation estimation algorithms are available in folder `/orientation`
 
 
 ## Usage
