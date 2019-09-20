@@ -4,28 +4,21 @@
 
 #include "../error.h"
 #include "vector.h"
-#include "../imu.h"
-#include "../imu_auto.h"
-#include "gyro_bias.h"
 #include "est.h"
 #include "est_euler_gyrounalign.h"
 
 typedef struct {
-    vector gyro_bias;
+    const vector* gyro_bias;
     double prev_roll;
     double prev_pitch;
     double prev_yaw;
 } _objt;
 
-error* est_euler_gyrounalign_init(est_euler_gyrounalignt** pobj, imu_autot* imu) {
+error* est_euler_gyrounalign_init(est_euler_gyrounalignt** pobj,
+    const vector* gyro_bias) {
     _objt* _obj = malloc(sizeof(_objt));
 
-    error* err = gyro_bias_init(&_obj->gyro_bias, imu);
-    if(err != NULL) {
-        free(_obj);
-        return err;
-    }
-
+    _obj->gyro_bias = gyro_bias;
     _obj->prev_roll = 0;
     _obj->prev_pitch = 0;
     _obj->prev_yaw = 0;
@@ -39,7 +32,7 @@ void est_euler_gyrounalign_do(est_euler_gyrounalignt* obj, const double* gyro,
     _objt* _obj = (_objt*)obj;
 
     vector tuned_gyro;
-    vector_diff((const vector*)gyro, &_obj->gyro_bias, &tuned_gyro);
+    vector_diff((const vector*)gyro, _obj->gyro_bias, &tuned_gyro);
 
     _obj->prev_roll = _obj->prev_roll + tuned_gyro.x*dt;
     _obj->prev_pitch = _obj->prev_pitch + tuned_gyro.y*dt;

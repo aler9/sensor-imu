@@ -4,35 +4,23 @@
 
 #include "../error.h"
 #include "vector.h"
-#include "../imu.h"
-#include "../imu_auto.h"
-#include "align_dcm.h"
-#include "gyro_bias.h"
 #include "est.h"
 #include "est_dcm_compl.h"
 
 #define ALPHA 0.1f
 
 typedef struct {
-    vector gyro_bias;
-    matrix align;
+    const matrix* align_dcm;
+    const vector* gyro_bias;
     vector prev_K;
 } _objt;
 
-error* est_dcm_compl_init(est_dcm_complt** pobj, imu_autot* imu) {
+error* est_dcm_compl_init(est_dcm_complt** pobj, const matrix* align_dcm,
+    const vector* gyro_bias) {
     _objt* _obj = malloc(sizeof(_objt));
 
-    error* err = gyro_bias_init(&_obj->gyro_bias, imu);
-    if(err != NULL) {
-        free(_obj);
-        return err;
-    }
-
-    err = align_dcm_init(&_obj->align, imu);
-    if(err != NULL) {
-        free(_obj);
-        return err;
-    }
+    _obj->align_dcm = align_dcm;
+    _obj->gyro_bias = gyro_bias;
 
     // initial K points downwards
     _obj->prev_K.x = 0;
@@ -48,13 +36,13 @@ void est_dcm_compl_do(est_dcm_complt* obj, const double* acc, const double* gyro
     _objt* _obj = (_objt*)obj;
 
     vector aligned_acc;
-    matrix_multiply(&_obj->align, (const vector*)acc, &aligned_acc);
+    matrix_multiply(_obj->align_dcm, (const vector*)acc, &aligned_acc);
 
     vector tuned_gyro;
-    vector_diff((const vector*)gyro, &_obj->gyro_bias, &tuned_gyro);
+    vector_diff((const vector*)gyro, _obj->gyro_bias, &tuned_gyro);
 
     vector aligned_gyro;
-    matrix_multiply(&_obj->align, &tuned_gyro, &aligned_gyro);
+    matrix_multiply(_obj->align_dcm, &tuned_gyro, &aligned_gyro);
 
     // get K from accelerometers
     vector acc_K;
