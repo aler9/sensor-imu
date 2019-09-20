@@ -9,6 +9,11 @@ Features:
 * orientation estimation algorithms are available in folder `/orientation`
 
 
+## Installation
+
+Copy into your project folder all the files ending with `.c` and `.h`.
+
+
 ## Usage
 
 ```

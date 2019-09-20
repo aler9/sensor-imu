@@ -12,21 +12,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc6-dev \
     libi2c-dev
 WORKDIR /s
-COPY *.h *.c Makefile Makefile.src ./
+COPY *.h *.c ./
+COPY test ./test
+WORKDIR ./test
 RUN make build_direct
 endef
 export DOCKERFILE
 
 build_cross:
 	docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes >/dev/null
-	echo "$$DOCKERFILE" | docker build . -f - -t temp
+	echo "$$DOCKERFILE" | docker build ../ -f - -t temp
 
 TARGET ?= pi@192.168.2.170
 BIN = test-imu
 
 deploy: build_cross
 	ssh $(TARGET) "killall $(BIN) || exit 0"
-	docker run --rm temp cat /s/$(BIN) \
+	docker run --rm temp cat /s/test/$(BIN) \
 	| ssh $(TARGET) "tee ./$(BIN) >/dev/null"
 	ssh $(TARGET) "chmod +x ./$(BIN)"
 	ssh $(TARGET) "./$(BIN)"

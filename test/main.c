@@ -4,9 +4,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "error.h"
-#include "imu.h"
-#include "imu_auto.h"
+#include "../error.h"
+#include "../imu.h"
+#include "../imu_auto.h"
 
 int main() {
     // disable stdout buffering

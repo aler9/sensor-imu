@@ -1,7 +1,9 @@
 
 BIN = test-imu
 
-OBJECTS = $(patsubst %.c,%.o,$(wildcard *.c))
+OBJECTS = \
+	$(patsubst %.c,%.o,$(wildcard ../*.c)) \
+	main.o
 
 CFLAGS += -Wall \
 	-Werror \
