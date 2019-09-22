@@ -26,7 +26,7 @@ error* est_euler_acc_init(est_euler_acct** pobj, const matrix* align_dcm) {
     return NULL;
 }
 
-void est_euler_acc_do(est_euler_acct* obj, const double* acc, double dt, estimator_output* eo) {
+void est_euler_acc_do(est_euler_acct* obj, const double* acc, estimator_output* eo) {
     _objt* _obj = (_objt*)obj;
 
     vector aligned_acc;

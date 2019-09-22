@@ -6,6 +6,7 @@ OBJECTS = \
 	main.o
 
 CFLAGS += -Wall \
+	-Wextra \
 	-Werror \
 	-O3
 
