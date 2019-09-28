@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "../error.h"
 #include "../imu.h"
 #include "../imu_auto.h"
 

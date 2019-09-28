@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../error.h"
+#include "../imu.h"
 #include "vector.h"
 #include "est.h"
 #include "est_euler_gyro.h"

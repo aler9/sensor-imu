@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "error.h"
 #include "imu.h"
 #include "imu_invensense.h"
 #include "imu_auto.h"

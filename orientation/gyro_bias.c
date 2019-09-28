@@ -1,9 +1,8 @@
 
 #include <stdio.h>
 
-#include "../error.h"
-#include "vector.h"
 #include "../imu.h"
+#include "vector.h"
 #include "../imu_auto.h"
 #include "gyro_bias.h"
 

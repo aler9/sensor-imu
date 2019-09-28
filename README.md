@@ -11,7 +11,7 @@ Features:
 
 ## Installation
 
-Copy into your project folder all the files ending with `.c` and `.h`.
+Copy all the files ending with `.c` and `.h` into your project folder.
 
 
 ## Usage
@@ -22,7 +22,6 @@ Copy into your project folder all the files ending with `.c` and `.h`.
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "error.h"
 #include "imu.h"
 #include "imu_auto.h"
 

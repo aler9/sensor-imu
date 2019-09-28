@@ -1,6 +1,8 @@
 
 #pragma once
 
+typedef const char error;
+
 typedef struct {
     union {
         struct {

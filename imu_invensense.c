@@ -6,7 +6,6 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 
-#include "error.h"
 #include "imu.h"
 #include "imu_invensense.h"
 
