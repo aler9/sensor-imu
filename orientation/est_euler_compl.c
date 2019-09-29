@@ -7,21 +7,21 @@
 #include "est.h"
 #include "est_euler_compl.h"
 
-#define ALPHA 0.1f
-
 typedef struct {
     const matrix* align_dcm;
     const vector* gyro_bias;
+    double alpha;
     double prev_roll;
     double prev_pitch;
 } _objt;
 
 error* est_euler_compl_init(est_euler_complt** pobj, const matrix* align_dcm,
-    const vector* gyro_bias) {
+    const vector* gyro_bias, double alpha) {
     _objt* _obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
     _obj->gyro_bias = gyro_bias;
+    _obj->alpha = alpha;
     _obj->prev_roll = 0;
     _obj->prev_pitch = 0;
 
@@ -45,8 +45,8 @@ void est_euler_compl_do(est_euler_complt* obj, const double* acc, const double* 
     double acc_roll = atan2(aligned_acc.y, aligned_acc.z);
     double acc_pitch = -atan2(aligned_acc.x, sqrt(aligned_acc.y*aligned_acc.y + aligned_acc.z*aligned_acc.z));
 
-    _obj->prev_roll = acc_roll*ALPHA + (1 - ALPHA)*(_obj->prev_roll + aligned_gyro.x * dt);
-    _obj->prev_pitch = acc_pitch*ALPHA + (1 - ALPHA)*(_obj->prev_pitch + aligned_gyro.y * dt);
+    _obj->prev_roll = acc_roll*_obj->alpha + (1 - _obj->alpha)*(_obj->prev_roll + aligned_gyro.x * dt);
+    _obj->prev_pitch = acc_pitch*_obj->alpha + (1 - _obj->alpha)*(_obj->prev_pitch + aligned_gyro.y * dt);
 
     eo->roll = _obj->prev_roll;
     eo->pitch = _obj->prev_pitch;

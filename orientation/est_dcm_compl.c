@@ -7,20 +7,20 @@
 #include "est.h"
 #include "est_dcm_compl.h"
 
-#define ALPHA 0.1f
-
 typedef struct {
     const matrix* align_dcm;
     const vector* gyro_bias;
+    double alpha;
     vector prev_K;
 } _objt;
 
 error* est_dcm_compl_init(est_dcm_complt** pobj, const matrix* align_dcm,
-    const vector* gyro_bias) {
+    const vector* gyro_bias, double alpha) {
     _objt* _obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
     _obj->gyro_bias = gyro_bias;
+    _obj->alpha = alpha;
 
     // initial K points downwards
     _obj->prev_K.x = 0;
@@ -58,9 +58,9 @@ void est_dcm_compl_do(est_dcm_complt* obj, const double* acc, const double* gyro
     gyro_K.z += dt * gyro_dK.z;
 
     // filter
-    _obj->prev_K.x = ALPHA*acc_K.x + (1 - ALPHA)*gyro_K.x;
-    _obj->prev_K.y = ALPHA*acc_K.y + (1 - ALPHA)*gyro_K.y;
-    _obj->prev_K.z = ALPHA*acc_K.z + (1 - ALPHA)*gyro_K.z;
+    _obj->prev_K.x = _obj->alpha*acc_K.x + (1 - _obj->alpha)*gyro_K.x;
+    _obj->prev_K.y = _obj->alpha*acc_K.y + (1 - _obj->alpha)*gyro_K.y;
+    _obj->prev_K.z = _obj->alpha*acc_K.z + (1 - _obj->alpha)*gyro_K.z;
 
     // normalize
     vector_normalize(&_obj->prev_K);
