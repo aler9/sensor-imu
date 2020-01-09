@@ -1,6 +1,6 @@
 # sensor-imu
 
-C library for interacting with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062).
+C library for interacting with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062). It was written for the **[raspberry-imu-viewer](https://github.com/aler9/raspberry-imu-viewer)** project, an orientation viewer in 3D for the Raspberry Pi, where you can also find a working example on how to use this library.
 
 Features:
 * works with Raspberry Pi / Linux and probably with almost every single-board computer equipped with I2C
