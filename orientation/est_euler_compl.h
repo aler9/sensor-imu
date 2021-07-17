@@ -1,6 +1,8 @@
 
 #pragma once
 
+#define EST_EULER_COMPL_DEFAULT_ALPHA 0.1f
+
 typedef void est_euler_complt;
 
 error *est_euler_compl_init(est_euler_complt **pobj, const matrix *align_dcm,

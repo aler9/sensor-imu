@@ -18,7 +18,7 @@ error *est_euler_acc_init(est_euler_acct **pobj, const matrix *align_dcm, double
     _objt *_obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
-    _obj->alpha = alpha; // normally is 0.4
+    _obj->alpha = alpha;
     _obj->prev_roll = 0;
     _obj->prev_pitch = 0;
 

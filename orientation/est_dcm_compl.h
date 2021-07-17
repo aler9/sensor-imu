@@ -1,6 +1,8 @@
 
 #pragma once
 
+#define EST_DCM_COMPL_DEFAULT_ALPHA 0.1f
+
 typedef void est_dcm_complt;
 
 error *est_dcm_compl_init(est_dcm_complt **pobj, const matrix *align_dcm,
