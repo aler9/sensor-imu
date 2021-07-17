@@ -13,39 +13,80 @@ Features:
 
 ## Installation
 
-Copy all the files ending with `.c` and `.h` into your project folder.
+1. On the Raspberry Pi, enable I2C in fast-speed mode: edit `/boot/config.txt` and add:
 
-## Usage
+   ```
+   dtparam=i2c_arm=on
+   dtparam=i2c_arm_baudrate=400000
+   ```
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
+   then edit `/etc/modules` and add
 
-#include "imu.h"
-#include "imu_auto.h"
+   ```
+   i2c-dev
+   ```
 
-int main() {
-    int i2c_fd = open("/dev/i2c-1", O_RDWR);
-    if(i2c_fd < 0) {
-        return -1;
-    }
+   then reboot the system.
 
-    imu_autot *imu;
-    error *err = imu_auto_init(&imu, i2c_fd);
-    if(err != NULL) {
-        return -1;
-    }
 
-    imu_output io;
-    err = imu_auto_read(imu, &io);
-    if(err != NULL) {
-        return -1;
-    }
+2. Install the dependencies:
 
-    printf("gyro x,y,z: %f, %f, %f\n", io.gyro.x, io.gyro.y, io.gyro.z);
-    printf("acc x,y,z: %f, %f, %f\n", io.acc.x, io.acc.y, io.acc.z);
-    return 0;
-}
-```
+   ```
+   sudo apt install -y git make gcc libc6-dev libi2c-dev
+   ```
+
+3. Clone this repository:
+
+   ```
+   git clone https://github.com/aler9/sensor-imu
+   ```
+
+4. Create a sample source file named `main.c`:
+
+   ```c
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <unistd.h>
+   #include <fcntl.h>
+
+   #include "sensor-imu/imu.h"
+   #include "sensor-imu/imu_auto.h"
+
+   int main() {
+       int i2c_fd = open("/dev/i2c-1", O_RDWR);
+       if(i2c_fd < 0) {
+           printf("ERR: unable to open device /dev/i2c-1\n");
+           return -1;
+       }
+
+       imu_autot *imu;
+       error *err = imu_auto_init(&imu, i2c_fd);
+       if(err != NULL) {
+           printf("ERR: %s\n", err);
+           return -1;
+       }
+
+       imu_output io;
+       err = imu_auto_read(imu, &io);
+       if(err != NULL) {
+           printf("ERR: %s\n", err);
+           return -1;
+       }
+
+       printf("gyro x,y,z: %f, %f, %f\n", io.gyro.x, io.gyro.y, io.gyro.z);
+       printf("acc x,y,z: %f, %f, %f\n", io.acc.x, io.acc.y, io.acc.z);
+       return 0;
+   }
+   ```
+
+5. Build:
+
+   ```
+   gcc -o main sensor-imu/*.c main.c
+   ```
+
+6. Launch:
+
+   ```
+   ./main
+   ```
