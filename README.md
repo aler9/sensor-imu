@@ -89,3 +89,7 @@ Features:
    ```
    ./main
    ```
+
+## Links
+
+* https://github.com/aler9/raspberry-imu-viewer
