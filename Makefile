@@ -1,4 +1,15 @@
 
+.PHONY: $(shell ls)
+
+help:
+	@echo "usage: make [action]"
+	@echo ""
+	@echo "available actions:"
+	@echo ""
+	@echo "  format    format source files"
+	@echo "  lint      run linter"
+	@echo ""
+
 define DOCKERFILE_FORMAT
 FROM ubuntu:20.04
 
