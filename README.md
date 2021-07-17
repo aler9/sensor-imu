@@ -8,12 +8,12 @@ C library to interact with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, IC
 Features:
 * works with Raspberry Pi / Linux and probably with almost every single-board computer equipped with I2C
 * IMU model and address are autodetected during initialization
-* sampling rate up to 1khz (when I2C speed is 400khz)
+* sampling rate can reach 1khz (when I2C speed is 400khz)
 * orientation estimation algorithms are available in folder `/orientation`
 
 ## Installation
 
-1. On the Raspberry Pi, enable I2C in fast-speed mode: edit `/boot/config.txt` and add:
+1. On the Raspberry Pi, enable I2C and set speed to 400khz: edit `/boot/config.txt` and add:
 
    ```
    dtparam=i2c_arm=on
