@@ -3,8 +3,10 @@
 
 #include "../imu.h"
 #include "../imu_auto.h"
-#include "gyro_bias.h"
+
 #include "vector.h"
+
+#include "gyro_bias.h"
 
 #define SAMPLE_COUNT 500
 

@@ -3,9 +3,11 @@
 #include <stdlib.h>
 
 #include "../imu.h"
+
 #include "est.h"
-#include "est_euler_gyrounalign.h"
 #include "vector.h"
+
+#include "est_euler_gyrounalign.h"
 
 typedef struct {
     const vector *gyro_bias;

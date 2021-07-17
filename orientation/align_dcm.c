@@ -3,8 +3,10 @@
 
 #include "../imu.h"
 #include "../imu_auto.h"
-#include "align_dcm.h"
+
 #include "vector.h"
+
+#include "align_dcm.h"
 
 #define SAMPLE_COUNT 500
 

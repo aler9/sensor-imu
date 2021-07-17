@@ -3,9 +3,11 @@
 #include <stdlib.h>
 
 #include "../imu.h"
+
 #include "est.h"
-#include "est_dcm_compl.h"
 #include "vector.h"
+
+#include "est_dcm_compl.h"
 
 typedef struct {
     const matrix *align_dcm;
