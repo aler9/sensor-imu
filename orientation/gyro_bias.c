@@ -1,5 +1,4 @@
 
-#include <stdio.h>
 #include <string.h>
 
 #include "../imu.h"
@@ -27,6 +26,5 @@ error *gyro_bias_init(vector *gyro_bias, imu_autot *imu) {
     gyro_bias->y /= SAMPLE_COUNT;
     gyro_bias->z /= SAMPLE_COUNT;
 
-    printf("gyro bias: %f, %f, %f\n", gyro_bias->x, gyro_bias->y, gyro_bias->z);
     return NULL;
 }
