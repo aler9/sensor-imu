@@ -125,15 +125,10 @@ static inline int16_t make_int16(uint8_t *data) {
 error *imu_invensense_read(void *obj, imu_output *out) {
     _objt *_obj = (_objt*)obj;
 
-    int res = ioctl(_obj->i2c_fd, I2C_SLAVE, _obj->address);
-    if(res != 0) {
-        return "ioctl() failed";
-    }
-
     uint8_t out_raw[6];
 
     uint8_t cmd = ACC_X;
-    res = write(_obj->i2c_fd, &cmd, 1);
+    int res = write(_obj->i2c_fd, &cmd, 1);
     if(res != 1) {
         return "write() failed";
     }
