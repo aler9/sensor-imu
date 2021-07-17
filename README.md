@@ -13,7 +13,6 @@ Features:
 
 Copy all the files ending with `.c` and `.h` into your project folder.
 
-
 ## Usage
 
 ```c
