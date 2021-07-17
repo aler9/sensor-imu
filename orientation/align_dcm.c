@@ -10,9 +10,9 @@
 
 error *align_dcm_init(matrix *align, imu_autot *imu) {
     // sample accelerometers and get K
-    vector vK;
-    imu_output io;
+    vector vK = {0};
     for(int i = 0; i < SAMPLE_COUNT; i++) {
+        imu_output io;
         error *err = imu_auto_read(imu, &io);
         if(err != NULL) {
             return err;
@@ -31,10 +31,7 @@ error *align_dcm_init(matrix *align, imu_autot *imu) {
     vector_normalize(&vK);
 
     // assume IMU is pointing north
-    vector vI;
-    vI.x = 1;
-    vI.y = 0;
-    vI.z = 0;
+    vector vI = {1, 0, 0};
 
     // get J
     vector vJ;

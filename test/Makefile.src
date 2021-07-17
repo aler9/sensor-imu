@@ -5,7 +5,8 @@ OBJECTS = \
 	$(patsubst %.c,%.o,$(wildcard ../*.c)) \
 	main.o
 
-CFLAGS += -Wall \
+CFLAGS += \
+	-Wall \
 	-Wextra \
 	-Werror \
 	-O3
