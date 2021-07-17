@@ -56,8 +56,13 @@ static error *find_and_init_sensor(_objt *_obj, int i2c_fd) {
             continue;
         }
 
-        imu_invensense_init(&_obj->sensor, i2c_fd, address, INVENSENSE_ACC_2G,
-                            INVENSENSE_GYRO_250);
+        error *err =
+            imu_invensense_init(&_obj->sensor, i2c_fd, address,
+                                INVENSENSE_ACC_2G, INVENSENSE_GYRO_250);
+        if (err != NULL) {
+            return err;
+        }
+
         _obj->sensor_read = imu_invensense_read;
         return NULL;
     }
