@@ -1,13 +1,15 @@
+
 # sensor-imu
 
-C library for interacting with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062). It was written for the **[raspberry-imu-viewer](https://github.com/aler9/raspberry-imu-viewer)** project, an orientation viewer in 3D for the Raspberry Pi, where you can also find a working example on how to use this library.
+[![Lint](https://github.com/aler9/sensor-imu/workflows/lint/badge.svg)](https://github.com/aler9/sensor-imu/actions?query=workflow:lint)
+
+C library to interact with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062). It was written for the **[raspberry-imu-viewer](https://github.com/aler9/raspberry-imu-viewer)** project, an orientation viewer in 3D for the Raspberry Pi, where you can also find a working example on how to use this library.
 
 Features:
 * works with Raspberry Pi / Linux and probably with almost every single-board computer equipped with I2C
 * IMU model and address are autodetected during initialization
 * sampling rate up to 1khz (when I2C speed is 400khz)
 * orientation estimation algorithms are available in folder `/orientation`
-
 
 ## Installation
 

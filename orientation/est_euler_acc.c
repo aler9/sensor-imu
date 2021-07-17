@@ -1,11 +1,11 @@
 
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "../imu.h"
-#include "vector.h"
 #include "est.h"
 #include "est_euler_acc.h"
+#include "vector.h"
 
 typedef struct {
     const matrix *align_dcm;
@@ -14,7 +14,8 @@ typedef struct {
     double prev_pitch;
 } _objt;
 
-error *est_euler_acc_init(est_euler_acct **pobj, const matrix *align_dcm, double alpha) {
+error *est_euler_acc_init(est_euler_acct **pobj, const matrix *align_dcm,
+                          double alpha) {
     _objt *_obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
@@ -26,17 +27,22 @@ error *est_euler_acc_init(est_euler_acct **pobj, const matrix *align_dcm, double
     return NULL;
 }
 
-void est_euler_acc_do(est_euler_acct *obj, const double *acc, estimator_output *eo) {
-    _objt *_obj = (_objt*)obj;
+void est_euler_acc_do(est_euler_acct *obj, const double *acc,
+                      estimator_output *eo) {
+    _objt *_obj = (_objt *)obj;
 
     vector aligned_acc;
-    matrix_multiply(_obj->align_dcm, (const vector*)acc, &aligned_acc);
+    matrix_multiply(_obj->align_dcm, (const vector *)acc, &aligned_acc);
 
     double cur_roll = atan2(aligned_acc.y, aligned_acc.z);
-    double cur_pitch = -atan2(aligned_acc.x, sqrt(aligned_acc.y*aligned_acc.y + aligned_acc.z*aligned_acc.z));
+    double cur_pitch =
+        -atan2(aligned_acc.x, sqrt(aligned_acc.y * aligned_acc.y +
+                                   aligned_acc.z * aligned_acc.z));
 
-    _obj->prev_roll = _obj->alpha*cur_roll + _obj->prev_roll*(1 - _obj->alpha);
-    _obj->prev_pitch = _obj->alpha*cur_pitch + _obj->prev_pitch*(1 - _obj->alpha);
+    _obj->prev_roll =
+        _obj->alpha * cur_roll + _obj->prev_roll * (1 - _obj->alpha);
+    _obj->prev_pitch =
+        _obj->alpha * cur_pitch + _obj->prev_pitch * (1 - _obj->alpha);
 
     eo->roll = _obj->prev_roll;
     eo->pitch = _obj->prev_pitch;
