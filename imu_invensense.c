@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "imu.h"
+
 #include "imu_invensense.h"
 
 #define POWERMAN1 0x6B

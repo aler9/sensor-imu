@@ -2,11 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../imu.h"
-
-#include "est.h"
-#include "vector.h"
-
 #include "est_euler_compl.h"
 
 typedef struct {

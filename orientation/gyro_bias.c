@@ -1,20 +1,15 @@
 
 #include <string.h>
 
-#include "../imu.h"
-#include "../imu_auto.h"
-
-#include "vector.h"
-
 #include "gyro_bias.h"
 
 #define SAMPLE_COUNT 500
 
-error *gyro_bias_init(vector *gyro_bias, imu_autot *imu) {
+error *gyro_bias_init(vector *gyro_bias, imut *imu) {
     memset(gyro_bias, 0, sizeof(vector));
     for (int i = 0; i < SAMPLE_COUNT; i++) {
         imu_output io;
-        error *err = imu_auto_read(imu, &io);
+        error *err = imu_read(imu, &io);
         if (err != NULL) {
             return err;
         }

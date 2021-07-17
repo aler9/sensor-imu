@@ -1,4 +1,8 @@
 
 #pragma once
 
-error *align_dcm_init(matrix *align, imu_autot *imu);
+#include "../imu.h"
+
+#include "vector.h"
+
+error *align_dcm_init(matrix *align, imut *imu);

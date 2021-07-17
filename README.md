@@ -50,7 +50,6 @@ Features:
    #include <fcntl.h>
 
    #include "sensor-imu/imu.h"
-   #include "sensor-imu/imu_auto.h"
 
    int main() {
        int i2c_fd = open("/dev/i2c-1", O_RDWR);
@@ -59,15 +58,15 @@ Features:
            return -1;
        }
 
-       imu_autot *imu;
-       error *err = imu_auto_init(&imu, i2c_fd);
+       imut *imu;
+       error *err = imu_init(&imu, i2c_fd);
        if(err != NULL) {
            printf("ERR: %s\n", err);
            return -1;
        }
 
        imu_output io;
-       err = imu_auto_read(imu, &io);
+       err = imu_read(imu, &io);
        if(err != NULL) {
            printf("ERR: %s\n", err);
            return -1;

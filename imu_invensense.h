@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "imu.h"
+
 typedef enum {
     INVENSENSE_ACC_2G,
     INVENSENSE_ACC_4G,

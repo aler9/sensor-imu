@@ -1,6 +1,11 @@
 
 #pragma once
 
+#include "../imu.h"
+
+#include "est.h"
+#include "vector.h"
+
 typedef void est_euler_gyrot;
 
 error *est_euler_gyro_init(est_euler_gyrot **pobj, const matrix *align_dcm,

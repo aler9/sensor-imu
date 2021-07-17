@@ -1,6 +1,11 @@
 
 #pragma once
 
+#include "../imu.h"
+
+#include "est.h"
+#include "vector.h"
+
 #define EST_EULER_ACC_DEFAULT_ALPHA 0.4f
 
 typedef void est_euler_acct;

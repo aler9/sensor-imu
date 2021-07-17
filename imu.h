@@ -21,3 +21,9 @@ typedef struct {
         double gyro_array[3];
     };
 } imu_output;
+
+typedef void imut;
+
+error *imu_init(imut **pobj, int i2c_fd);
+void imu_destroy(imut *obj);
+error *imu_read(imut *obj, imu_output *out);

@@ -1,6 +1,11 @@
 
 #pragma once
 
+#include "../imu.h"
+
+#include "est.h"
+#include "vector.h"
+
 #define EST_DCM_COMPL_DEFAULT_ALPHA 0.1f
 
 typedef void est_dcm_complt;
