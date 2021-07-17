@@ -8,10 +8,10 @@
 
 #define SAMPLE_COUNT 500
 
-error* gyro_bias_init(vector* gyro_bias, imu_autot* imu) {
+error *gyro_bias_init(vector *gyro_bias, imu_autot *imu) {
     imu_output io;
     for(int i = 0; i < SAMPLE_COUNT; i++) {
-        error* err = imu_auto_read(imu, &io);
+        error *err = imu_auto_read(imu, &io);
         if(err != NULL) {
             return err;
         }

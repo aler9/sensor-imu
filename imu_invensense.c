@@ -23,9 +23,9 @@ typedef struct {
     double acc_ssf;
 } _objt;
 
-error* imu_invensense_init(imu_invensense** pobj, int i2c_fd, uint8_t address,
+error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
     invensense_acc_range acc_range, invensense_gyro_range gyro_range) {
-    _objt* _obj = malloc(sizeof(_objt));
+    _objt *_obj = malloc(sizeof(_objt));
 
     _obj->i2c_fd = i2c_fd;
     _obj->address = address;
@@ -114,16 +114,16 @@ error* imu_invensense_init(imu_invensense** pobj, int i2c_fd, uint8_t address,
     return NULL;
 }
 
-void imu_invensense_destroy(imu_invensense* obj) {
+void imu_invensense_destroy(imu_invensense *obj) {
     free(obj);
 }
 
-static inline int16_t make_int16(uint8_t* data) {
+static inline int16_t make_int16(uint8_t *data) {
     return data[0] << 8 | data[1];
 }
 
-error* imu_invensense_read(void* obj, imu_output* out) {
-    _objt* _obj = (_objt*)obj;
+error *imu_invensense_read(void *obj, imu_output *out) {
+    _objt *_obj = (_objt*)obj;
 
     int res = ioctl(_obj->i2c_fd, I2C_SLAVE, _obj->address);
     if(res != 0) {

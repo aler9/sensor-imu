@@ -10,14 +10,14 @@
 #include "imu_invensense.h"
 #include "imu_auto.h"
 
-typedef error* (*sensor_read_func)(void*, imu_output*);
+typedef error *(*sensor_read_func)(void *, imu_output *);
 
 typedef struct {
-    void* sensor;
+    void *sensor;
     sensor_read_func sensor_read;
 } _objt;
 
-static error* find_sensor(_objt* _obj, int i2c_fd) {
+static error *find_sensor(_objt *_obj, int i2c_fd) {
     for(uint8_t address = 0x68; address <= 0x69; address++) {
         int res = ioctl(i2c_fd, I2C_SLAVE, address);
         if(res != 0) {
@@ -53,10 +53,10 @@ static error* find_sensor(_objt* _obj, int i2c_fd) {
     return "no IMU sensor found";
 }
 
-error* imu_auto_init(imu_autot** pobj, int i2c_fd) {
-    _objt* _obj = malloc(sizeof(_objt));
+error *imu_auto_init(imu_autot **pobj, int i2c_fd) {
+    _objt *_obj = malloc(sizeof(_objt));
 
-    error* err = find_sensor(_obj, i2c_fd);
+    error *err = find_sensor(_obj, i2c_fd);
     if(err != NULL) {
         free(_obj);
         return err;
@@ -66,11 +66,11 @@ error* imu_auto_init(imu_autot** pobj, int i2c_fd) {
     return NULL;
 }
 
-void imu_auto_destroy(imu_autot* obj) {
+void imu_auto_destroy(imu_autot *obj) {
     free(obj);
 }
 
-error* imu_auto_read(imu_autot* obj, imu_output* out) {
-    _objt* _obj = (_objt*)obj;
+error *imu_auto_read(imu_autot *obj, imu_output *out) {
+    _objt *_obj = (_objt *)obj;
     return _obj->sensor_read(_obj->sensor, out);
 }

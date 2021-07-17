@@ -16,8 +16,8 @@ int main() {
         return -1;
     }
 
-    imu_autot* imu;
-    error* err = imu_auto_init(&imu, i2c_fd);
+    imu_autot *imu;
+    error *err = imu_auto_init(&imu, i2c_fd);
     if(err != NULL) {
         return -1;
     }

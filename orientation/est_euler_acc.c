@@ -8,14 +8,14 @@
 #include "est_euler_acc.h"
 
 typedef struct {
-    const matrix* align_dcm;
+    const matrix *align_dcm;
     double alpha;
     double prev_roll;
     double prev_pitch;
 } _objt;
 
-error* est_euler_acc_init(est_euler_acct** pobj, const matrix* align_dcm, double alpha) {
-    _objt* _obj = malloc(sizeof(_objt));
+error *est_euler_acc_init(est_euler_acct **pobj, const matrix *align_dcm, double alpha) {
+    _objt *_obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
     _obj->alpha = alpha; // normally is 0.4
@@ -26,8 +26,8 @@ error* est_euler_acc_init(est_euler_acct** pobj, const matrix* align_dcm, double
     return NULL;
 }
 
-void est_euler_acc_do(est_euler_acct* obj, const double* acc, estimator_output* eo) {
-    _objt* _obj = (_objt*)obj;
+void est_euler_acc_do(est_euler_acct *obj, const double *acc, estimator_output *eo) {
+    _objt *_obj = (_objt*)obj;
 
     vector aligned_acc;
     matrix_multiply(_obj->align_dcm, (const vector*)acc, &aligned_acc);

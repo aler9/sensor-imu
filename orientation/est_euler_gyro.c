@@ -8,16 +8,16 @@
 #include "est_euler_gyro.h"
 
 typedef struct {
-    const matrix* align_dcm;
-    const vector* gyro_bias;
+    const matrix *align_dcm;
+    const vector *gyro_bias;
     double prev_roll;
     double prev_pitch;
     double prev_yaw;
 } _objt;
 
-error* est_euler_gyro_init(est_euler_gyrot** pobj, const matrix* align_dcm,
-    const vector* gyro_bias) {
-    _objt* _obj = malloc(sizeof(_objt));
+error *est_euler_gyro_init(est_euler_gyrot **pobj, const matrix *align_dcm,
+    const vector *gyro_bias) {
+    _objt *_obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
     _obj->gyro_bias = gyro_bias;
@@ -29,12 +29,12 @@ error* est_euler_gyro_init(est_euler_gyrot** pobj, const matrix* align_dcm,
     return NULL;
 }
 
-void est_euler_gyro_do(est_euler_gyrot* obj, const double* gyro, double dt,
-    estimator_output* eo) {
-    _objt* _obj = (_objt*)obj;
+void est_euler_gyro_do(est_euler_gyrot *obj, const double *gyro, double dt,
+    estimator_output *eo) {
+    _objt *_obj = (_objt*)obj;
 
     vector tuned_gyro;
-    vector_diff((const vector*)gyro, _obj->gyro_bias, &tuned_gyro);
+    vector_diff((const vector *)gyro, _obj->gyro_bias, &tuned_gyro);
 
     vector aligned_gyro;
     matrix_multiply(_obj->align_dcm, &tuned_gyro, &aligned_gyro);

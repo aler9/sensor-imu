@@ -1,7 +1,7 @@
 
-all: build_cross
+all: build-cross
 
-build_direct:
+build-direct:
 	@$(MAKE) -f Makefile.src
 
 define DOCKERFILE
@@ -15,18 +15,18 @@ WORKDIR /s
 COPY *.h *.c ./
 COPY test ./test
 WORKDIR ./test
-RUN make build_direct
+RUN make build-direct
 endef
 export DOCKERFILE
 
-build_cross:
+build-cross:
 	docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes >/dev/null
 	echo "$$DOCKERFILE" | docker build ../ -f - -t temp
 
 TARGET ?= pi@192.168.2.170
 BIN = test-imu
 
-deploy: build_cross
+deploy: build-cross
 	ssh $(TARGET) "killall $(BIN) || exit 0"
 	docker run --rm temp cat /s/test/$(BIN) \
 	| ssh $(TARGET) "tee ./$(BIN) >/dev/null"

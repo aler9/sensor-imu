@@ -8,15 +8,15 @@
 #include "est_euler_gyrounalign.h"
 
 typedef struct {
-    const vector* gyro_bias;
+    const vector *gyro_bias;
     double prev_roll;
     double prev_pitch;
     double prev_yaw;
 } _objt;
 
-error* est_euler_gyrounalign_init(est_euler_gyrounalignt** pobj,
-    const vector* gyro_bias) {
-    _objt* _obj = malloc(sizeof(_objt));
+error *est_euler_gyrounalign_init(est_euler_gyrounalignt **pobj,
+    const vector *gyro_bias) {
+    _objt *_obj = malloc(sizeof(_objt));
 
     _obj->gyro_bias = gyro_bias;
     _obj->prev_roll = 0;
@@ -27,9 +27,9 @@ error* est_euler_gyrounalign_init(est_euler_gyrounalignt** pobj,
     return NULL;
 }
 
-void est_euler_gyrounalign_do(est_euler_gyrounalignt* obj, const double* gyro,
-    double dt, estimator_output* eo) {
-    _objt* _obj = (_objt*)obj;
+void est_euler_gyrounalign_do(est_euler_gyrounalignt *obj, const double *gyro,
+    double dt, estimator_output *eo) {
+    _objt *_obj = (_objt*)obj;
 
     vector tuned_gyro;
     vector_diff((const vector*)gyro, _obj->gyro_bias, &tuned_gyro);

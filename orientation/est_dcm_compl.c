@@ -8,15 +8,15 @@
 #include "est_dcm_compl.h"
 
 typedef struct {
-    const matrix* align_dcm;
-    const vector* gyro_bias;
+    const matrix *align_dcm;
+    const vector *gyro_bias;
     double alpha;
     vector prev_K;
 } _objt;
 
-error* est_dcm_compl_init(est_dcm_complt** pobj, const matrix* align_dcm,
-    const vector* gyro_bias, double alpha) {
-    _objt* _obj = malloc(sizeof(_objt));
+error *est_dcm_compl_init(est_dcm_complt **pobj, const matrix *align_dcm,
+    const vector *gyro_bias, double alpha) {
+    _objt *_obj = malloc(sizeof(_objt));
 
     _obj->align_dcm = align_dcm;
     _obj->gyro_bias = gyro_bias;
@@ -31,9 +31,9 @@ error* est_dcm_compl_init(est_dcm_complt** pobj, const matrix* align_dcm,
     return NULL;
 }
 
-void est_dcm_compl_do(est_dcm_complt* obj, const double* acc, const double* gyro, double dt,
-    estimator_output* eo) {
-    _objt* _obj = (_objt*)obj;
+void est_dcm_compl_do(est_dcm_complt *obj, const double *acc, const double *gyro, double dt,
+    estimator_output *eo) {
+    _objt *_obj = (_objt*)obj;
 
     vector aligned_acc;
     matrix_multiply(_obj->align_dcm, (const vector*)acc, &aligned_acc);
