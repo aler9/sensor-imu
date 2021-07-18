@@ -90,6 +90,20 @@ Features:
    ./main
    ```
 
+## Documentation
+
+```error *imu_init(imut **pobj, int i2c_fd)```
+
+Creates an IMU reader. Arguments a pointer to an empty `imut*` object, and a file descriptor created with `open()` that points to the I2C device. It returns `NULL` in case of success, otherwise returns an error.
+
+```void imu_destroy(imut *obj)```
+
+Destroys an IMU reader.
+
+```error *imu_read(imut *obj, imu_output *out)```
+
+Performs a measurement. Returns an `imu_output` that contains the measurements.
+
 ## Links
 
 * https://github.com/aler9/raspberry-imu-viewer
