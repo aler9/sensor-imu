@@ -1,8 +1,6 @@
 
-#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "../imu.h"
 
@@ -10,14 +8,9 @@ int main() {
     // disable stdout buffering
     setbuf(stdout, NULL);
 
-    int i2c_fd = open("/dev/i2c-1", O_RDWR);
-    if (i2c_fd < 0) {
-        return -1;
-    }
-
     imut *imu;
     error *err =
-        imu_init(&imu, i2c_fd, IMU_ACC_RANGE_2G, IMU_GYRO_RANGE_250DPS);
+        imu_init(&imu, "/dev/i2c-1", IMU_ACC_RANGE_2G, IMU_GYRO_RANGE_250DPS);
     if (err != NULL) {
         return -1;
     }

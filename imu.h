@@ -38,7 +38,7 @@ typedef struct {
 
 typedef void imut;
 
-error *imu_init(imut **pobj, int i2c_fd, imu_acc_range acc_range,
+error *imu_init(imut **pobj, const char *path, imu_acc_range acc_range,
                 imu_gyro_range gyro_range);
 void imu_destroy(imut *obj);
 error *imu_read(imut *obj, imu_output *out);

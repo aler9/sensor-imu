@@ -1,4 +1,5 @@
 
+#include <fcntl.h>
 #include <linux/i2c-dev.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -13,27 +14,27 @@
 typedef error *(*sensor_read_func)(void *, imu_output *);
 
 typedef struct {
+    int fd;
     void *sensor;
     sensor_read_func sensor_read;
 } _objt;
 
-static error *find_and_init_sensor(_objt *_obj, int i2c_fd,
-                                   imu_acc_range acc_range,
+static error *find_and_init_sensor(_objt *_obj, imu_acc_range acc_range,
                                    imu_gyro_range gyro_range) {
     for (uint8_t address = 0x68; address <= 0x69; address++) {
-        int res = ioctl(i2c_fd, I2C_SLAVE, address);
+        int res = ioctl(_obj->fd, I2C_SLAVE, address);
         if (res != 0) {
             continue;
         }
 
         uint8_t cmd = 0x75;
-        res = write(i2c_fd, &cmd, 1);
+        res = write(_obj->fd, &cmd, 1);
         if (res != 1) {
             continue;
         }
 
         uint8_t who_am_i;
-        res = read(i2c_fd, &who_am_i, 1);
+        res = read(_obj->fd, &who_am_i, 1);
         if (res != 1) {
             continue;
         }
@@ -58,7 +59,7 @@ static error *find_and_init_sensor(_objt *_obj, int i2c_fd,
             continue;
         }
 
-        error *err = imu_invensense_init(&_obj->sensor, i2c_fd, address,
+        error *err = imu_invensense_init(&_obj->sensor, _obj->fd, address,
                                          acc_range, gyro_range);
         if (err != NULL) {
             return err;
@@ -71,12 +72,18 @@ static error *find_and_init_sensor(_objt *_obj, int i2c_fd,
     return "no IMU sensor found";
 }
 
-error *imu_init(imut **pobj, int i2c_fd, imu_acc_range acc_range,
+error *imu_init(imut **pobj, const char *path, imu_acc_range acc_range,
                 imu_gyro_range gyro_range) {
     _objt *_obj = malloc(sizeof(_objt));
 
-    error *err = find_and_init_sensor(_obj, i2c_fd, acc_range, gyro_range);
+    _obj->fd = open(path, O_RDWR);
+    if (_obj->fd < 0) {
+        return "unable to open the device";
+    }
+
+    error *err = find_and_init_sensor(_obj, acc_range, gyro_range);
     if (err != NULL) {
+        close(_obj->fd);
         free(_obj);
         return err;
     }
@@ -85,7 +92,11 @@ error *imu_init(imut **pobj, int i2c_fd, imu_acc_range acc_range,
     return NULL;
 }
 
-void imu_destroy(imut *obj) { free(obj); }
+void imu_destroy(imut *obj) {
+    _objt *_obj = (_objt *)obj;
+    close(_obj->fd);
+    free(obj);
+}
 
 error *imu_read(imut *obj, imu_output *out) {
     _objt *_obj = (_objt *)obj;

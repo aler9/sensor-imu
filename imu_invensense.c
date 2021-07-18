@@ -18,17 +18,17 @@
 #define GYRO_X 0x43
 
 typedef struct {
-    int i2c_fd;
+    int fd;
     uint8_t address;
     double gyro_ssf;
     double acc_ssf;
 } _objt;
 
-error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
+error *imu_invensense_init(imu_invensense **pobj, int fd, uint8_t address,
                            imu_acc_range acc_range, imu_gyro_range gyro_range) {
     _objt *_obj = malloc(sizeof(_objt));
 
-    _obj->i2c_fd = i2c_fd;
+    _obj->fd = fd;
     _obj->address = address;
 
     uint8_t acc_conf = 0;
@@ -79,7 +79,7 @@ error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
         break;
     }
 
-    int res = ioctl(_obj->i2c_fd, I2C_SLAVE, _obj->address);
+    int res = ioctl(_obj->fd, I2C_SLAVE, _obj->address);
     if (res != 0) {
         free(_obj);
         return "ioctl() failed";
@@ -89,7 +89,7 @@ error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
 
     cmd[0] = POWERMAN1;
     cmd[1] = POWERMAN1_DISABLE_TEMP;
-    res = write(_obj->i2c_fd, cmd, 2);
+    res = write(_obj->fd, cmd, 2);
     if (res != 2) {
         free(_obj);
         return "write() failed";
@@ -97,7 +97,7 @@ error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
 
     cmd[0] = ACC_CONF;
     cmd[1] = acc_conf;
-    res = write(_obj->i2c_fd, cmd, 2);
+    res = write(_obj->fd, cmd, 2);
     if (res != 2) {
         free(_obj);
         return "write() failed";
@@ -105,7 +105,7 @@ error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
 
     cmd[0] = GYRO_CONF;
     cmd[1] = gyro_conf;
-    res = write(_obj->i2c_fd, cmd, 2);
+    res = write(_obj->fd, cmd, 2);
     if (res != 2) {
         free(_obj);
         return "write() failed";
@@ -127,12 +127,12 @@ error *imu_invensense_read(void *obj, imu_output *out) {
     uint8_t out_raw[6];
 
     uint8_t cmd = ACC_X;
-    int res = write(_obj->i2c_fd, &cmd, 1);
+    int res = write(_obj->fd, &cmd, 1);
     if (res != 1) {
         return "write() failed";
     }
 
-    res = read(_obj->i2c_fd, out_raw, 6);
+    res = read(_obj->fd, out_raw, 6);
     if (res != 6) {
         return "read() failed";
     }
@@ -142,12 +142,12 @@ error *imu_invensense_read(void *obj, imu_output *out) {
     out->acc.z = (double)make_int16(&out_raw[4]) / _obj->acc_ssf;
 
     cmd = GYRO_X;
-    res = write(_obj->i2c_fd, &cmd, 1);
+    res = write(_obj->fd, &cmd, 1);
     if (res != 1) {
         return "write() failed";
     }
 
-    res = read(_obj->i2c_fd, out_raw, 6);
+    res = read(_obj->fd, out_raw, 6);
     if (res != 6) {
         return "read() failed";
     }

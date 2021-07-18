@@ -47,20 +47,12 @@ Features:
    ```c
    #include <stdio.h>
    #include <stdlib.h>
-   #include <unistd.h>
-   #include <fcntl.h>
 
    #include "sensor-imu/imu.h"
 
    int main() {
-       int i2c_fd = open("/dev/i2c-1", O_RDWR);
-       if(i2c_fd < 0) {
-           printf("ERR: unable to open device /dev/i2c-1\n");
-           return -1;
-       }
-
        imut *imu;
-       error *err = imu_init(&imu, i2c_fd, IMU_ACC_RANGE_2G, IMU_GYRO_RANGE_250DPS);
+       error *err = imu_init(&imu, "/dev/i2c-1", IMU_ACC_RANGE_2G, IMU_GYRO_RANGE_250DPS);
        if(err != NULL) {
            printf("ERR: %s\n", err);
            return -1;
@@ -93,9 +85,9 @@ Features:
 
 ## Documentation
 
-```error *imu_init(imut **pobj, int i2c_fd, imu_acc_range acc_range, imu_gyro_range gyro_range)```
+```error *imu_init(imut **pobj, const char *path, imu_acc_range acc_range, imu_gyro_range gyro_range)```
 
-Creates an IMU reader. Arguments a pointer to an empty `imut*` object, a file descriptor created with `open()` that points to the I2C device, the accelerometer range and the gyroscope range. It returns `NULL` in case of success, otherwise returns an error.
+Creates an IMU reader. Arguments a pointer to an empty `imut*` object, the path to the I2C device, the accelerometer range and the gyroscope range. It returns `NULL` in case of success, otherwise returns an error.
 
 ```void imu_destroy(imut *obj)```
 
