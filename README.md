@@ -83,7 +83,7 @@ Features:
    ./main
    ```
 
-## Documentation
+## API Documentation
 
 ```error *imu_init(imut **pobj, const char *path, imu_acc_range acc_range, imu_gyro_range gyro_range)```
 
