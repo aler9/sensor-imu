@@ -36,13 +36,13 @@ void est_euler_gyro_do(est_euler_gyrot *obj, const double *gyro, double dt,
     vector aligned_gyro;
     matrix_multiply(_obj->align_dcm, &tuned_gyro, &aligned_gyro);
 
-    _obj->prev_roll = _obj->prev_roll + aligned_gyro.x * dt;
-    _obj->prev_pitch = _obj->prev_pitch + aligned_gyro.y * dt;
-    _obj->prev_yaw = _obj->prev_yaw + aligned_gyro.z * dt;
+    _obj->prev_roll = _obj->prev_roll + aligned_gyro.x * dt * (M_PI / 180.0f);
+    _obj->prev_pitch = _obj->prev_pitch + aligned_gyro.y * dt * (M_PI / 180.0f);
+    _obj->prev_yaw = _obj->prev_yaw + aligned_gyro.z * dt * (M_PI / 180.0f);
 
-    eo->roll = _obj->prev_roll;
-    eo->pitch = _obj->prev_pitch;
-    // eo->yaw = _obj->prev_yaw;
+    eo->roll = _obj->prev_roll * (180.0f / M_PI);
+    eo->pitch = _obj->prev_pitch * (180.0f / M_PI);
+    // eo->yaw = _obj->prev_yaw * (180.0f / M_PI);
     // do not use yaw, such that the result can be compared with other
     // estimators
     eo->yaw = 0;

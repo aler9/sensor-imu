@@ -41,7 +41,7 @@ void est_euler_acc_do(est_euler_acct *obj, const double *acc,
     _obj->prev_pitch =
         _obj->alpha * cur_pitch + _obj->prev_pitch * (1 - _obj->alpha);
 
-    eo->roll = _obj->prev_roll;
-    eo->pitch = _obj->prev_pitch;
+    eo->roll = _obj->prev_roll * (180.0f / M_PI);
+    eo->pitch = _obj->prev_pitch * (180.0f / M_PI);
     eo->yaw = 0;
 }

@@ -36,22 +36,22 @@ error *imu_invensense_init(imu_invensense **pobj, int fd, uint8_t address,
     switch (acc_range) {
     case IMU_ACC_RANGE_2G:
         acc_conf = 0;
-        _obj->acc_ssf = 16384.0f;
+        _obj->acc_ssf = 32768.0f / 2.0f;
         break;
 
     case IMU_ACC_RANGE_4G:
         acc_conf = (1 << 3);
-        _obj->acc_ssf = 8192.0f;
+        _obj->acc_ssf = 32768.0f / 4.0f;
         break;
 
     case IMU_ACC_RANGE_8G:
         acc_conf = (2 << 3);
-        _obj->acc_ssf = 4096.0f;
+        _obj->acc_ssf = 32768.0f / 8.0f;
         break;
 
     case IMU_ACC_RANGE_16G:
         acc_conf = (3 << 3);
-        _obj->acc_ssf = 2048.0f;
+        _obj->acc_ssf = 32768.0f / 16.0f;
         break;
     }
 
@@ -60,22 +60,22 @@ error *imu_invensense_init(imu_invensense **pobj, int fd, uint8_t address,
     switch (gyro_range) {
     case IMU_GYRO_RANGE_250DPS:
         gyro_conf = 0;
-        _obj->gyro_ssf = (131.0f * 180.0f / M_PI);
+        _obj->gyro_ssf = 32768.0f / 250.0f;
         break;
 
     case IMU_GYRO_RANGE_500DPS:
         gyro_conf = (1 << 3);
-        _obj->gyro_ssf = (65.5f * 180.0f / M_PI);
+        _obj->gyro_ssf = 32768.0f / 500.0f;
         break;
 
     case IMU_GYRO_RANGE_1000DPS:
         gyro_conf = (2 << 3);
-        _obj->gyro_ssf = (32.8f * 180.0f / M_PI);
+        _obj->gyro_ssf = 32768.0f / 1000.0f;
         break;
 
     case IMU_GYRO_RANGE_2000DPS:
         gyro_conf = (3 << 3);
-        _obj->gyro_ssf = (16.4f * 180.0f / M_PI);
+        _obj->gyro_ssf = 32768.0f / 2000.0f;
         break;
     }
 

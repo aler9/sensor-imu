@@ -50,9 +50,9 @@ void est_dcm_compl_do(est_dcm_complt *obj, const double *acc,
     vector gyro_K;
     vector_cross(&_obj->prev_K, &aligned_gyro, &gyro_dK);
     vector_copy(&_obj->prev_K, &gyro_K);
-    gyro_K.x += dt * gyro_dK.x;
-    gyro_K.y += dt * gyro_dK.y;
-    gyro_K.z += dt * gyro_dK.z;
+    gyro_K.x += dt * gyro_dK.x * (M_PI / 180.0f);
+    gyro_K.y += dt * gyro_dK.y * (M_PI / 180.0f);
+    gyro_K.z += dt * gyro_dK.z * (M_PI / 180.0f);
 
     // filter
     _obj->prev_K.x = _obj->alpha * acc_K.x + (1 - _obj->alpha) * gyro_K.x;
@@ -62,7 +62,7 @@ void est_dcm_compl_do(est_dcm_complt *obj, const double *acc,
     // normalize
     vector_normalize(&_obj->prev_K);
 
-    eo->roll = atan2(_obj->prev_K.y, _obj->prev_K.z);
-    eo->pitch = -asin(_obj->prev_K.x);
+    eo->roll = atan2(_obj->prev_K.y, _obj->prev_K.z) * (180.0f / M_PI);
+    eo->pitch = -asin(_obj->prev_K.x) * (180.0f / M_PI);
     eo->yaw = 0;
 }

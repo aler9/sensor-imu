@@ -46,12 +46,14 @@ void est_euler_compl_do(est_euler_complt *obj, const double *acc,
 
     _obj->prev_roll =
         acc_roll * _obj->alpha +
-        (1 - _obj->alpha) * (_obj->prev_roll + aligned_gyro.x * dt);
+        (1 - _obj->alpha) *
+            (_obj->prev_roll + aligned_gyro.x * dt * (M_PI / 180.0f));
     _obj->prev_pitch =
         acc_pitch * _obj->alpha +
-        (1 - _obj->alpha) * (_obj->prev_pitch + aligned_gyro.y * dt);
+        (1 - _obj->alpha) *
+            (_obj->prev_pitch + aligned_gyro.y * dt * (M_PI / 180.0f));
 
-    eo->roll = _obj->prev_roll;
-    eo->pitch = _obj->prev_pitch;
+    eo->roll = _obj->prev_roll * (180.0f / M_PI);
+    eo->pitch = _obj->prev_pitch * (180.0f / M_PI);
     eo->yaw = 0;
 }

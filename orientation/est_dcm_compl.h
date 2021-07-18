@@ -6,7 +6,7 @@
 #include "est.h"
 #include "vector.h"
 
-#define EST_DCM_COMPL_DEFAULT_ALPHA 0.1f
+#define EST_DCM_COMPL_DEFAULT_ALPHA 0.15f
 
 typedef void est_dcm_complt;
 

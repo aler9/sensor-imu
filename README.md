@@ -97,6 +97,8 @@ Destroys an IMU reader.
 
 Performs a measurement. Returns an `imu_output` that contains the measurements.
 
+Accelerometer measurements are expressed in [g], while gyroscope measurements are expressed in [deg/s]
+
 ## Links
 
 * https://github.com/aler9/raspberry-imu-viewer

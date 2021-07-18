@@ -31,13 +31,13 @@ void est_euler_gyrounalign_do(est_euler_gyrounalignt *obj, const double *gyro,
     vector tuned_gyro;
     vector_diff((const vector *)gyro, _obj->gyro_bias, &tuned_gyro);
 
-    _obj->prev_roll = _obj->prev_roll + tuned_gyro.x * dt;
-    _obj->prev_pitch = _obj->prev_pitch + tuned_gyro.y * dt;
-    _obj->prev_yaw = _obj->prev_yaw + tuned_gyro.z * dt;
+    _obj->prev_roll = _obj->prev_roll + tuned_gyro.x * dt * (M_PI / 180.0f);
+    _obj->prev_pitch = _obj->prev_pitch + tuned_gyro.y * dt * (M_PI / 180.0f);
+    _obj->prev_yaw = _obj->prev_yaw + tuned_gyro.z * dt * (M_PI / 180.0f);
 
-    eo->roll = _obj->prev_roll;
-    eo->pitch = _obj->prev_pitch;
-    // eo->yaw = _obj->prev_yaw;
+    eo->roll = _obj->prev_roll * (180.0f / M_PI);
+    eo->pitch = _obj->prev_pitch * (180.0f / M_PI);
+    // eo->yaw = _obj->prev_yaw * (180.0f / M_PI);
     // do not use yaw, such that the result can be compared with other
     // estimators
     eo->yaw = 0;
