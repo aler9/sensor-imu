@@ -25,8 +25,7 @@ typedef struct {
 } _objt;
 
 error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
-                           invensense_acc_range acc_range,
-                           invensense_gyro_range gyro_range) {
+                           imu_acc_range acc_range, imu_gyro_range gyro_range) {
     _objt *_obj = malloc(sizeof(_objt));
 
     _obj->i2c_fd = i2c_fd;
@@ -35,22 +34,22 @@ error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
     uint8_t acc_conf = 0;
 
     switch (acc_range) {
-    case INVENSENSE_ACC_2G:
+    case IMU_ACC_RANGE_2G:
         acc_conf = 0;
         _obj->acc_ssf = 16384.0f;
         break;
 
-    case INVENSENSE_ACC_4G:
+    case IMU_ACC_RANGE_4G:
         acc_conf = (1 << 3);
         _obj->acc_ssf = 8192.0f;
         break;
 
-    case INVENSENSE_ACC_8G:
+    case IMU_ACC_RANGE_8G:
         acc_conf = (2 << 3);
         _obj->acc_ssf = 4096.0f;
         break;
 
-    case INVENSENSE_ACC_16G:
+    case IMU_ACC_RANGE_16G:
         acc_conf = (3 << 3);
         _obj->acc_ssf = 2048.0f;
         break;
@@ -59,22 +58,22 @@ error *imu_invensense_init(imu_invensense **pobj, int i2c_fd, uint8_t address,
     uint8_t gyro_conf = 0;
 
     switch (gyro_range) {
-    case INVENSENSE_GYRO_250:
+    case IMU_GYRO_RANGE_250DPS:
         gyro_conf = 0;
         _obj->gyro_ssf = (131.0f * 180.0f / M_PI);
         break;
 
-    case INVENSENSE_GYRO_500:
+    case IMU_GYRO_RANGE_500DPS:
         gyro_conf = (1 << 3);
         _obj->gyro_ssf = (65.5f * 180.0f / M_PI);
         break;
 
-    case INVENSENSE_GYRO_1000:
+    case IMU_GYRO_RANGE_1000DPS:
         gyro_conf = (2 << 3);
         _obj->gyro_ssf = (32.8f * 180.0f / M_PI);
         break;
 
-    case INVENSENSE_GYRO_2000:
+    case IMU_GYRO_RANGE_2000DPS:
         gyro_conf = (3 << 3);
         _obj->gyro_ssf = (16.4f * 180.0f / M_PI);
         break;

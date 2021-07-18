@@ -8,6 +8,7 @@ help:
 	@echo ""
 	@echo "  format    format source files"
 	@echo "  lint      run linter"
+	@echo "  test      run tests"
 	@echo ""
 
 define DOCKERFILE_FORMAT
@@ -60,3 +61,6 @@ lint:
 	-v $(PWD):/s \
 	-w /s \
 	temp
+
+test:
+	cd test && make build-cross
