@@ -101,4 +101,4 @@ Accelerometer measurements are expressed in [g], while gyroscope measurements ar
 
 ## Links
 
-* https://github.com/aler9/raspberry-imu-viewer
+* [raspberry-imu-viewer](https://github.com/aler9/raspberry-imu-viewer)
