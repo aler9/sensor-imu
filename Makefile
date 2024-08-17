@@ -1,3 +1,5 @@
+RPI_IMAGE = balenalib/raspberry-pi:bullseye
+UBUNTU_IMAGE = ubuntu:22.04
 
 .PHONY: $(shell ls)
 

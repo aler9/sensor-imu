@@ -1,5 +1,5 @@
 define DOCKERFILE_LINT
-FROM ubuntu:20.04
+FROM $(UBUNTU_IMAGE)
 
 RUN apt update && apt install -y --no-install-recommends \
 	clang-format
