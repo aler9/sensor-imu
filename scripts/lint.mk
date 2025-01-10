@@ -20,6 +20,6 @@ export DOCKERFILE_LINT
 lint:
 	echo "$$DOCKERFILE_LINT" | docker build - -t temp
 	docker run --rm \
-	-v $(PWD):/s \
+	-v $(shell pwd):/s \
 	-w /s \
 	temp
