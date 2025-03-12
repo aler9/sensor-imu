@@ -1,8 +1,8 @@
 
 # sensor-imu
 
-[![Lint](https://github.com/aler9/sensor-imu/workflows/lint/badge.svg)](https://github.com/aler9/sensor-imu/actions?query=workflow:lint)
-[![Test](https://github.com/aler9/sensor-imu/workflows/test/badge.svg)](https://github.com/aler9/sensor-imu/actions?query=workflow:test)
+[![Lint](https://github.com/aler9/sensor-imu/actions/workflows/lint.yml/badge.svg)](https://github.com/aler9/sensor-imu/actions/workflows/lint.yml)
+[![Test](https://github.com/aler9/sensor-imu/actions/workflows/test.yml/badge.svg)](https://github.com/aler9/sensor-imu/actions/workflows/test.yml)
 
 C library to interact with various IMUs (MPU6000, MPU6050, MPU6500, ICM20600, ICM20601, ICM2062). It was written for the **[raspberry-imu-viewer](https://github.com/aler9/raspberry-imu-viewer)** project, an orientation viewer in 3D for the Raspberry Pi, where you can also find a working example on how to use this library.
 
